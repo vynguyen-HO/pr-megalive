@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video 12 kênh – Megalive 11.11</title>
+<style>
+:root{--bg:#f6f7f9;--panel:#fff;--fg:#17212b;--mut:#5d6b7a;--line:#dde2e8;--acc:#0f766e;--acc2:#b45309;--chip:#eef2f6}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--panel:#171e25;--fg:#e8edf2;--mut:#9aa8b6;--line:#2a343e;--acc:#2dd4bf;--acc2:#f59e0b;--chip:#202a33}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:28px 20px 56px}
+h1{font-size:26px;font-weight:650;margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:16px;font-weight:650;margin:34px 0 10px}
+.lead{font-size:15px;margin:0 0 4px}
+.note{color:var(--mut);font-size:12.5px;margin:4px 0 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:18px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.tile span{display:block;color:var(--mut);font-size:12.5px}
+.tile b{display:block;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
+#err{color:#b91c1c;font-size:13px;margin-top:8px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{fill:var(--mut);font-size:12px}
+.chart rect.bar{fill:var(--acc)}
+.chart rect.bar2{fill:var(--acc2)}
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.18);padding:6px 9px;border-radius:6px;font-size:12px;white-space:nowrap;display:none;z-index:3}
+.bar-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+select{font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px}
+label{color:var(--mut);font-size:12.5px}
+.wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel);max-height:640px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+th{position:sticky;top:0;background:var(--chip);text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none;z-index:1}
+th.on::after{content:" ▾"}th.on.asc::after{content:" ▴"}
+td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.n{text-align:right;white-space:nowrap}
+td.cap{min-width:280px;max-width:440px}
+tr:hover td{background:var(--chip)}
+a{color:var(--acc)}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;background:var(--chip);font-size:11.5px;white-space:nowrap}
+.pill.run{background:color-mix(in srgb,var(--acc) 18%,transparent)}
+details{margin-top:24px;color:var(--mut)}
+summary{cursor:pointer;color:var(--fg)}
+@media (max-width:480px){.charts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Video 12 kênh – Megalive 11.11</h1>
+<p class="lead" id="lead">Đang tải số liệu…</p>
+<p class="note" id="upd"></p>
+<p class="note">Số liệu là engage của ad (Spark ads, ads-only mode) đến hết 10/11/2026, không phải số organic. Video chưa có ad hoặc ad chưa delivery tính là 0 impression.</p>
+
+<div id="err" role="alert"></div>
+<div class="tiles" id="tiles"></div>
+
+<h2>Theo kênh</h2>
+<div class="charts">
+<div class="card"><div class="note" style="margin:0 0 8px">Impression</div><div class="chart" id="c1"></div></div>
+<div class="card"><div class="note" style="margin:0 0 8px">Tỷ lệ view ≥6s trên impression (kênh ít impression thì dao động mạnh)</div><div class="chart" id="c2"></div></div>
+</div>
+
+<h2>Chi tiết từng video</h2>
+<div class="bar-row">
+<label for="fc">Kênh</label><select id="fc"></select>
+<label for="ft">Tag</label><select id="ft"><option value="">Tất cả</option><option>Có</option><option>Không</option></select>
+<label for="fa">Ad</label><select id="fa"><option value="">Tất cả</option><option>Đã chạy ad</option><option>Chưa delivery</option><option>Chưa có ad</option></select>
+<span class="note" id="cnt"></span>
+</div>
+<div class="wrap"><table id="tb"><thead></thead><tbody></tbody></table></div>
+<p class="note">Bấm tiêu đề cột để sắp xếp. Ngày đăng theo giờ Việt Nam, suy từ ID video. Ô trống = chưa có ad dùng video này nên không có số liệu. Tag = caption có #megalive hoặc #megalive1111.</p>
+
+<details><summary>Định nghĩa chỉ số</summary>
+<p><b>Impression</b>: số lần ad hiển thị. <b>View ≥6s</b>: lượt xem từ 6 giây trở lên (engaged view). <b>ER</b> = (like + comment + share) / impression. <b>Vào profile</b>: lượt vào trang kênh từ ad.</p>
+<p>Nguồn: TikTok for Business, tài khoản HannahOlala - Affiliate (report ad level, campaign PR 11.11). Danh sách video lấy từ identity của 12 kênh.</p>
+</details>
+</main>
+<script>
+// === Cấu hình: đổi vynguyen-HO/pr-megalive thành repo GitHub của bạn (repo public) ===
+const DATA_URLS = [
+  'https://raw.githubusercontent.com/vynguyen-HO/pr-megalive/data/data.json',
+  'data.json'                       // dự phòng: file nằm cùng trang
+];
+const REFRESH_MS = 5 * 60 * 1000;   // trang tự tải lại số mỗi 5 phút
+
+const nf = new Intl.NumberFormat('en-US');
+const pf1 = (x)=> (x*100).toFixed(1)+'%', pf2=(x)=>(x*100).toFixed(2)+'%';
+const sum=(a,k)=>a.reduce((s,r)=>s+(+r[k]||0),0);
+let DATA=[], CH=[];
+
+async function load(){
+  let lastErr='';
+  for(const u of DATA_URLS){
+    try{
+      const r=await fetch(u+(u.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'});
+      if(!r.ok) throw new Error(u+' → '+r.status);
+      return await r.json();
+    }catch(e){lastErr=String(e.message||e)}
+  }
+  throw new Error(lastErr);
+}
+
+function setData(payload){
+  DATA=payload.videos;
+  DATA.forEach(r=>{r.er = r.impressions>0 ? ((r.likes||0)+(r.comments||0)+(r.shares||0))/r.impressions : null;});
+  const m=new Map();
+  DATA.forEach(v=>{if(!m.has(v.channel))m.set(v.channel,{channel:v.channel,videos:0,impressions:0,view6s:0,likes:0,comments:0,shares:0,visits:0});
+    const r=m.get(v.channel);r.videos++;['impressions','view6s','likes','comments','shares','visits'].forEach(k=>r[k]+=+v[k]||0);});
+  CH=[...m.values()].map(r=>({...r,pct6:r.impressions?r.view6s/r.impressions:0})).sort((a,b)=>b.impressions-a.impressions);
+  const T={videos:DATA.length,impressions:sum(DATA,'impressions'),view6s:sum(DATA,'view6s'),likes:sum(DATA,'likes'),comments:sum(DATA,'comments'),shares:sum(DATA,'shares'),visits:sum(DATA,'visits')};
+  T.er=T.impressions?(T.likes+T.comments+T.shares)/T.impressions:0;
+  const days=[...new Set(DATA.map(r=>r.posted.slice(8,10)+'/'+r.posted.slice(5,7)))].sort().join(', ');
+  document.getElementById('lead').textContent = T.videos
+    ? `12 kênh đăng ${T.videos} video (${days}), tạo ${nf.format(T.impressions)} impression; ${CH[0].channel} dẫn đầu với ${T.impressions?pf1(CH[0].impressions/T.impressions):'0%'} tổng impression.`
+    : 'Chưa có video nào trong khoảng thời gian này.';
+  const u=new Date(payload.updated_at);
+  document.getElementById('upd').textContent='Cập nhật lúc '+u.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'})+' (tự làm mới mỗi 30 phút).';
+  const tl=document.getElementById('tiles');tl.textContent='';
+  [['Video',nf.format(T.videos)],['Impression',nf.format(T.impressions)],['View ≥6s',nf.format(T.view6s)],['Like',nf.format(T.likes)],['Vào profile',nf.format(T.visits)],['ER (like + cmt + share) / impr',pf2(T.er)]].forEach(([l,v])=>{
+    const d=document.createElement('div');d.className='tile';const s=document.createElement('span');s.textContent=l;const b=document.createElement('b');b.textContent=v;d.append(s,b);tl.append(d);});
+  const keep=fc.value;fc.textContent='';fc.append(new Option('Tất cả kênh',''));CH.forEach(r=>fc.append(new Option(r.channel,r.channel)));
+  if([...fc.options].some(o=>o.value===keep))fc.value=keep;
+  drawCharts();render();
+}
+
+const NS='http://www.w3.org/2000/svg';
+function hbar(el,rows,key,fmt,cls){
+  el.textContent='';
+  const w=Math.max(300,el.clientWidth||480),rh=26,h=rows.length*rh+4;
+  const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.setAttribute('role','img');
+  svg.setAttribute('aria-label',rows.map(r=>r.channel+' '+fmt(r[key])).join(', '));
+  const tip=document.createElement('div');tip.className='tip';
+  el.append(svg,tip);
+  const mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  let lw=0,vw=0;const probe=mk('text',{});svg.append(probe);
+  rows.forEach(r=>{probe.textContent=r.channel;lw=Math.max(lw,probe.getComputedTextLength());probe.textContent=fmt(r[key]);vw=Math.max(vw,probe.getComputedTextLength());});
+  probe.remove();
+  const ml=Math.min(lw+12,w*.48),mr=vw+12,bw=Math.max(20,w-ml-mr),mx=Math.max(...rows.map(r=>r[key]),1);
+  rows.forEach((r,i)=>{
+    const g=mk('g',{transform:`translate(0,${i*rh+2})`});
+    const t=mk('text',{x:ml-8,y:rh/2+4,'text-anchor':'end'});t.textContent=r.channel;
+    const bwid=Math.max(1,bw*r[key]/mx);
+    const b=mk('rect',{class:cls,x:ml,y:3,width:bwid,height:rh-8,rx:2});
+    const v=mk('text',{x:ml+bwid+6,y:rh/2+4});v.textContent=fmt(r[key]);
+    g.append(t,b,v);
+    g.addEventListener('pointermove',e=>{const bb=el.getBoundingClientRect();tip.style.display='block';tip.textContent=`${r.channel}: ${fmt(r[key])} · ${r.videos} video`;tip.style.left=Math.min(e.clientX-bb.left+10,bb.width-200)+'px';tip.style.top=(e.clientY-bb.top+12)+'px';});
+    g.addEventListener('pointerleave',()=>{tip.style.display='none'});
+    svg.append(g);
+  });
+}
+function drawCharts(){
+  if(!CH.length)return;
+  hbar(document.getElementById('c1'),CH,'impressions',x=>nf.format(x),'bar');
+  hbar(document.getElementById('c2'),[...CH].sort((a,b)=>b.pct6-a.pct6),'pct6',pf1,'bar2');
+}
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(drawCharts,120)});
+
+const COLS=[['channel','Kênh','t'],['url','Video',null],['posted','Đăng','t'],['caption','Caption','t'],['ad_status','Ad','t'],['impressions','Impr','n'],['view6s','View ≥6s','n'],['likes','Like','n'],['comments','Cmt','n'],['shares','Share','n'],['follows','Follow','n'],['visits','Vào profile','n'],['er','ER','n']];
+let sk='posted',sd=-1;
+const thead=document.querySelector('#tb thead'),tbody=document.querySelector('#tb tbody');
+const htr=document.createElement('tr');
+COLS.forEach(([k,l])=>{const th=document.createElement('th');th.textContent=l;if(k!=='url'){th.dataset.k=k;th.addEventListener('click',()=>{if(sk===k)sd=-sd;else{sk=k;sd=['channel','caption','ad_status'].includes(k)?1:-1}render()})}htr.append(th)});
+thead.append(htr);
+const fc=document.getElementById('fc');
+['fc','ft','fa'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+function render(){
+  const c=fc.value,t=document.getElementById('ft').value,a=document.getElementById('fa').value;
+  const rows=DATA.filter(r=>(!c||r.channel===c)&&(!t||r.tag===t)&&(!a||r.ad_status===a));
+  rows.sort((x,y)=>{const p=x[sk],q=y[sk];if(p==null&&q==null)return 0;if(p==null)return 1;if(q==null)return -1;return (typeof p==='number'?p-q:String(p).localeCompare(String(q)))*sd});
+  document.getElementById('cnt').textContent=rows.length+' video';
+  htr.querySelectorAll('th').forEach(th=>{th.className=th.dataset.k===sk?('on'+(sd===1?' asc':'')):''});
+  tbody.textContent='';
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');
+    COLS.forEach(([k,,ty])=>{
+      const td=document.createElement('td');
+      if(k==='url'){const A=document.createElement('a');A.href=r.url;A.target='_blank';A.rel='noopener';A.textContent='Mở';td.append(A);}
+      else if(k==='posted'){td.textContent=r.posted.slice(8,10)+'/'+r.posted.slice(5,7)+' '+r.posted.slice(11,16);}
+      else if(k==='ad_status'){const s=document.createElement('span');s.className='pill'+(r.ad_status==='Đã chạy ad'?' run':'');s.textContent=r.ad_status;td.append(s);}
+      else if(k==='er'){td.className='n';td.textContent=r.er==null?'':pf2(r.er);}
+      else if(ty==='n'){td.className='n';td.textContent=r[k]==null?'':nf.format(r[k]);}
+      else{td.textContent=r[k];if(k==='caption')td.className='cap';}
+      tr.append(td);
+    });
+    tbody.append(tr);
+  });
+}
+
+async function refresh(){
+  try{setData(await load());document.getElementById('err').textContent='';}
+  catch(e){document.getElementById('err').textContent='Không tải được số liệu: '+e.message+'. Đang hiển thị số liệu lần trước (nếu có).';}
+}
+refresh();setInterval(refresh,REFRESH_MS);
+</script>
+</body>
+</html>
