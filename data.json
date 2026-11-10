@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-11T01:14:49+07:00",
+ "updated_at": "2026-11-11T01:20:13+07:00",
  "start_date": "2026-11-09",
  "videos": [
   {
@@ -19,7 +19,8 @@
    "comments": null,
    "shares": null,
    "follows": null,
-   "visits": null
+   "visits": null,
+   "spend": null
   },
   {
    "channel": "Càng soi càng sáng",
@@ -38,7 +39,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Hóng gì mua đó",
@@ -57,7 +59,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "noidzido",
@@ -76,7 +79,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Mua gì xài đó",
@@ -95,7 +99,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Ngọc Hằng",
@@ -114,7 +119,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "pynchi",
@@ -133,7 +139,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -152,7 +159,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Thích săn sale",
@@ -171,7 +179,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "pynchi",
@@ -190,7 +199,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Càng soi càng sáng",
@@ -209,7 +219,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Sống có phúc, di chúc có tên",
@@ -228,7 +239,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Hóng gì mua đó",
@@ -240,14 +252,15 @@
    "tag": "Có",
    "duration": 77.4,
    "ad_status": "Đã chạy ad",
-   "impressions": 11,
-   "plays": 11,
+   "impressions": 13,
+   "plays": 13,
    "view6s": 2,
    "likes": 0,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 81
   },
   {
    "channel": "Sống có phúc, di chúc có tên",
@@ -266,7 +279,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Hà My",
@@ -285,7 +299,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "ChanLee",
@@ -304,7 +319,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Ngọc Hằng",
@@ -323,7 +339,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -335,14 +352,15 @@
    "tag": "Có",
    "duration": 28.3,
    "ad_status": "Đã chạy ad",
-   "impressions": 1,
-   "plays": 1,
+   "impressions": 3,
+   "plays": 3,
    "view6s": 1,
    "likes": 0,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 60
   },
   {
    "channel": "Hà vy05",
@@ -361,7 +379,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "ChanLee",
@@ -380,7 +399,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "noidzido",
@@ -399,7 +419,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -411,14 +432,15 @@
    "tag": "Có",
    "duration": 20.1,
    "ad_status": "Đã chạy ad",
-   "impressions": 1752,
-   "plays": 1736,
-   "view6s": 371,
+   "impressions": 1758,
+   "plays": 1742,
+   "view6s": 372,
    "likes": 7,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 3
+   "visits": 3,
+   "spend": 30834
   },
   {
    "channel": "pynchi",
@@ -430,14 +452,15 @@
    "tag": "Có",
    "duration": 18.3,
    "ad_status": "Đã chạy ad",
-   "impressions": 28805,
-   "plays": 28623,
-   "view6s": 2107,
+   "impressions": 31703,
+   "plays": 31515,
+   "view6s": 2326,
    "likes": 16,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 67
+   "visits": 71,
+   "spend": 116765
   },
   {
    "channel": "Sống có phúc, di chúc có tên",
@@ -449,14 +472,15 @@
    "tag": "Không",
    "duration": 15.4,
    "ad_status": "Đã chạy ad",
-   "impressions": 2627,
-   "plays": 2608,
-   "view6s": 175,
+   "impressions": 2842,
+   "plays": 2819,
+   "view6s": 193,
    "likes": 2,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 6
+   "visits": 6,
+   "spend": 10811
   },
   {
    "channel": "Thích săn sale",
@@ -475,7 +499,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 608
   },
   {
    "channel": "pynchi",
@@ -494,7 +519,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Sống có phúc, di chúc có tên",
@@ -513,7 +539,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Hà My",
@@ -532,7 +559,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "ChanLee",
@@ -544,14 +572,15 @@
    "tag": "Không",
    "duration": 20.1,
    "ad_status": "Đã chạy ad",
-   "impressions": 1530,
-   "plays": 1524,
-   "view6s": 553,
+   "impressions": 1533,
+   "plays": 1527,
+   "view6s": 554,
    "likes": 1,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 2
+   "visits": 2,
+   "spend": 36590
   },
   {
    "channel": "Mua gì xài đó",
@@ -570,7 +599,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 61
   },
   {
    "channel": "noidzido",
@@ -589,7 +619,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Ngọc Hằng",
@@ -608,7 +639,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 371
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -627,7 +659,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 59
   },
   {
    "channel": "Hà vy05",
@@ -646,7 +679,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 111
   },
   {
    "channel": "Càng soi càng sáng",
@@ -665,7 +699,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 174
   },
   {
    "channel": "Hóng gì mua đó",
@@ -684,7 +719,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 152
   },
   {
    "channel": "noidzido",
@@ -703,7 +739,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Càng soi càng sáng",
@@ -722,7 +759,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Mua gì xài đó",
@@ -741,7 +779,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Ngọc Hằng",
@@ -753,14 +792,15 @@
    "tag": "Có",
    "duration": 22.4,
    "ad_status": "Đã chạy ad",
-   "impressions": 182,
-   "plays": 180,
-   "view6s": 27,
+   "impressions": 219,
+   "plays": 217,
+   "view6s": 30,
    "likes": 0,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 873
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -779,7 +819,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 0
   },
   {
    "channel": "Hóng gì mua đó",
@@ -798,7 +839,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 861
   },
   {
    "channel": "pynchi",
@@ -817,7 +859,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 18
+   "visits": 18,
+   "spend": 69644
   },
   {
    "channel": "noidzido",
@@ -836,7 +879,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 2
+   "visits": 2,
+   "spend": 1390
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -855,7 +899,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 3
+   "visits": 3,
+   "spend": 10993
   },
   {
    "channel": "Sống có phúc, di chúc có tên",
@@ -874,7 +919,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 198
   },
   {
    "channel": "Mua gì xài đó",
@@ -893,7 +939,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 1
+   "visits": 1,
+   "spend": 667
   },
   {
    "channel": "Hóng gì mua đó",
@@ -905,14 +952,15 @@
    "tag": "Có",
    "duration": 20.0,
    "ad_status": "Đã chạy ad",
-   "impressions": 52021,
-   "plays": 51762,
-   "view6s": 9848,
-   "likes": 115,
+   "impressions": 52665,
+   "plays": 52406,
+   "view6s": 10002,
+   "likes": 117,
    "comments": 0,
    "shares": 0,
    "follows": 3,
-   "visits": 118
+   "visits": 122,
+   "spend": 367101
   },
   {
    "channel": "Càng soi càng sáng",
@@ -931,7 +979,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 1,
-   "visits": 6
+   "visits": 6,
+   "spend": 62708
   },
   {
    "channel": "noidzido",
@@ -950,7 +999,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 261
   },
   {
    "channel": "Càng soi càng sáng",
@@ -969,7 +1019,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 3
+   "visits": 3,
+   "spend": 8647
   },
   {
    "channel": "Hóng gì mua đó",
@@ -981,14 +1032,15 @@
    "tag": "Có",
    "duration": 20.5,
    "ad_status": "Đã chạy ad",
-   "impressions": 65302,
-   "plays": 64957,
-   "view6s": 19127,
-   "likes": 158,
+   "impressions": 65996,
+   "plays": 65648,
+   "view6s": 19371,
+   "likes": 159,
    "comments": 1,
    "shares": 0,
    "follows": 10,
-   "visits": 165
+   "visits": 168,
+   "spend": 1152686
   },
   {
    "channel": "Mua gì xài đó",
@@ -1007,7 +1059,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 237
   },
   {
    "channel": "Càng soi càng sáng",
@@ -1026,7 +1079,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 11
+   "visits": 11,
+   "spend": 27560
   },
   {
    "channel": "Hóng gì mua đó",
@@ -1038,14 +1092,15 @@
    "tag": "Có",
    "duration": 16.1,
    "ad_status": "Đã chạy ad",
-   "impressions": 23308,
-   "plays": 23172,
-   "view6s": 5526,
+   "impressions": 23323,
+   "plays": 23186,
+   "view6s": 5529,
    "likes": 85,
    "comments": 0,
    "shares": 0,
    "follows": 1,
-   "visits": 70
+   "visits": 70,
+   "spend": 160844
   },
   {
    "channel": "Mua gì xài đó",
@@ -1064,7 +1119,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 5
+   "visits": 5,
+   "spend": 35285
   },
   {
    "channel": "Càng soi càng sáng",
@@ -1076,14 +1132,15 @@
    "tag": "Có",
    "duration": 19.5,
    "ad_status": "Đã chạy ad",
-   "impressions": 1172,
-   "plays": 1162,
+   "impressions": 1173,
+   "plays": 1163,
    "view6s": 116,
    "likes": 5,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 3
+   "visits": 3,
+   "spend": 7181
   },
   {
    "channel": "Mua gì xài đó",
@@ -1095,14 +1152,15 @@
    "tag": "Có",
    "duration": 19.7,
    "ad_status": "Đã chạy ad",
-   "impressions": 35,
-   "plays": 35,
+   "impressions": 37,
+   "plays": 36,
    "view6s": 17,
    "likes": 0,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 264
   },
   {
    "channel": "Hóng gì mua đó",
@@ -1121,7 +1179,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 385
   },
   {
    "channel": "Hà vy05",
@@ -1133,14 +1192,15 @@
    "tag": "Có",
    "duration": 18.2,
    "ad_status": "Đã chạy ad",
-   "impressions": 113069,
-   "plays": 112455,
-   "view6s": 23245,
+   "impressions": 113094,
+   "plays": 112480,
+   "view6s": 23253,
    "likes": 100,
    "comments": 1,
    "shares": 0,
    "follows": 11,
-   "visits": 174
+   "visits": 174,
+   "spend": 1495589
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -1159,7 +1219,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 1272
   },
   {
    "channel": "Càng soi càng sáng",
@@ -1178,7 +1239,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 1191
   },
   {
    "channel": "Mua gì xài đó",
@@ -1197,7 +1259,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 4
+   "visits": 4,
+   "spend": 3841
   },
   {
    "channel": "Hóng gì mua đó",
@@ -1216,7 +1279,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 0
+   "visits": 0,
+   "spend": 69
   },
   {
    "channel": "Ngọc Hằng",
@@ -1235,7 +1299,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 17
+   "visits": 17,
+   "spend": 144571
   },
   {
    "channel": "noidzido",
@@ -1254,7 +1319,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 1
+   "visits": 1,
+   "spend": 1210
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -1273,7 +1339,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 7
+   "visits": 7,
+   "spend": 15594
   },
   {
    "channel": "Ngọc Hằng",
@@ -1292,7 +1359,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 1
+   "visits": 1,
+   "spend": 1842
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -1311,7 +1379,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 19
+   "visits": 19,
+   "spend": 36868
   },
   {
    "channel": "noidzido",
@@ -1330,7 +1399,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 8
+   "visits": 8,
+   "spend": 19167
   },
   {
    "channel": "Hà My",
@@ -1349,7 +1419,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 11
+   "visits": 11,
+   "spend": 52019
   },
   {
    "channel": "ChanLee",
@@ -1368,7 +1439,8 @@
    "comments": 0,
    "shares": 1,
    "follows": 0,
-   "visits": 1
+   "visits": 1,
+   "spend": 12265
   },
   {
    "channel": "pynchi",
@@ -1380,14 +1452,15 @@
    "tag": "Có",
    "duration": 20.1,
    "ad_status": "Đã chạy ad",
-   "impressions": 28934,
-   "plays": 28784,
+   "impressions": 28936,
+   "plays": 28786,
    "view6s": 4879,
    "likes": 72,
    "comments": 0,
    "shares": 0,
    "follows": 2,
-   "visits": 86
+   "visits": 86,
+   "spend": 258192
   },
   {
    "channel": "Thích săn sale",
@@ -1399,14 +1472,15 @@
    "tag": "Có",
    "duration": 16.9,
    "ad_status": "Đã chạy ad",
-   "impressions": 79712,
-   "plays": 78770,
+   "impressions": 79713,
+   "plays": 78771,
    "view6s": 8136,
    "likes": 49,
    "comments": 0,
    "shares": 1,
    "follows": 8,
-   "visits": 187
+   "visits": 187,
+   "spend": 1019650
   },
   {
    "channel": "Sống có phúc, di chúc có tên",
@@ -1425,7 +1499,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 3
+   "visits": 3,
+   "spend": 16962
   },
   {
    "channel": "Hà vy05",
@@ -1444,7 +1519,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 4
+   "visits": 4,
+   "spend": 9287
   },
   {
    "channel": "Ngọc Hằng",
@@ -1463,7 +1539,8 @@
    "comments": null,
    "shares": null,
    "follows": null,
-   "visits": null
+   "visits": null,
+   "spend": null
   },
   {
    "channel": "noidzido",
@@ -1482,7 +1559,8 @@
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 1
+   "visits": 1,
+   "spend": 2756
   },
   {
    "channel": "Lê Lý Hà Linh",
@@ -1494,14 +1572,15 @@
    "tag": "Có",
    "duration": 15.3,
    "ad_status": "Đã chạy ad",
-   "impressions": 3425,
-   "plays": 3383,
+   "impressions": 3426,
+   "plays": 3384,
    "view6s": 294,
    "likes": 5,
    "comments": 0,
    "shares": 0,
    "follows": 0,
-   "visits": 4
+   "visits": 4,
+   "spend": 22603
   }
  ]
 }
