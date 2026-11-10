@@ -81,12 +81,17 @@ summary{cursor:pointer;color:var(--fg)}
 </main>
 <script>
 // === Cấu hình: đổi vynguyen-HO/pr-megalive thành repo GitHub của bạn (repo public) ===
-const DATA_URLS = [
-  'https://raw.githubusercontent.com/vynguyen-HO/pr-megalive/data/data.json',
-  'data.json'                       // dự phòng: file nằm cùng trang
-];
-const ORG_URL = 'https://raw.githubusercontent.com/vynguyen-HO/pr-megalive/data/organic.json';
+const REPO = 'vynguyen-HO/pr-megalive', BRANCH = 'data';
+const RAW = 'https://raw.githubusercontent.com/'+REPO+'/';
 const REFRESH_MS = 5 * 60 * 1000;   // trang tự tải lại số mỗi 5 phút
+// Link raw theo tên nhánh bị cache tới 5 phút, nên hỏi GitHub commit mới nhất của nhánh data rồi đọc file theo commit đó.
+let REF = BRANCH;
+async function resolveRef(){
+  try{const r=await fetch('https://api.github.com/repos/'+REPO+'/commits/'+BRANCH,{headers:{Accept:'application/vnd.github.sha'},cache:'no-store'});
+    if(r.ok){const t=(await r.text()).trim();if(/^[0-9a-f]{40}$/.test(t))REF=t;}}catch(e){}
+}
+const DATA_URLS = [()=>RAW+REF+'/data.json', ()=>RAW+BRANCH+'/data.json', ()=>'data.json'];
+const ORG_URL = ()=>RAW+REF+'/organic.json';
 
 const nf = new Intl.NumberFormat('en-US');
 const pf1 = (x)=> (x*100).toFixed(1)+'%', pf2=(x)=>(x*100).toFixed(2)+'%';
@@ -95,9 +100,10 @@ let DATA=[], CH=[];
 
 async function load(){
   let lastErr='';
-  for(const u of DATA_URLS){
+  for(const f of DATA_URLS){
+    const u=f();
     try{
-      const r=await fetch(u+(u.includes('?')?'&':'?')+'t='+Date.now(),{cache:'no-store'});
+      const r=await fetch(u,{cache:'no-store'});
       if(!r.ok) throw new Error(u+' → '+r.status);
       return await r.json();
     }catch(e){lastErr=String(e.message||e)}
@@ -106,7 +112,7 @@ async function load(){
 }
 
 async function loadOrg(){
-  try{const r=await fetch(ORG_URL+'?t='+Date.now(),{cache:'no-store'});return r.ok?await r.json():null}catch(e){return null}
+  try{const r=await fetch(ORG_URL(),{cache:'no-store'});return r.ok?await r.json():null}catch(e){return null}
 }
 
 const vnd=x=>nf.format(Math.round(x))+'đ';
@@ -214,7 +220,7 @@ function render(){
 }
 
 async function refresh(){
-  try{const [p,o]=await Promise.all([load(),loadOrg()]);setData(p,o);document.getElementById('err').textContent='';}
+  try{await resolveRef();const [p,o]=await Promise.all([load(),loadOrg()]);setData(p,o);document.getElementById('err').textContent='';}
   catch(e){document.getElementById('err').textContent='Không tải được số liệu: '+e.message+'. Đang hiển thị số liệu lần trước (nếu có).';}
 }
 refresh();setInterval(refresh,REFRESH_MS);
