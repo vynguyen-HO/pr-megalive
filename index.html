@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Video 12 kênh – Megalive 11.11</title>
 <style>
-:root{--bg:#f6f7f9;--panel:#fff;--fg:#17212b;--mut:#5d6b7a;--line:#dde2e8;--acc:#0f766e;--acc2:#b45309;--chip:#eef2f6;--ads:#0f766e;--org:#86cfc6}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--panel:#171e25;--fg:#e8edf2;--mut:#9aa8b6;--line:#2a343e;--acc:#2dd4bf;--acc2:#f59e0b;--chip:#202a33;--ads:#2dd4bf;--org:#1d6b63}}
+:root{--bg:#f6f7f9;--panel:#fff;--fg:#17212b;--mut:#5d6b7a;--line:#dde2e8;--acc:#0f766e;--acc2:#b45309;--chip:#eef2f6;--ads:#2563eb;--org:#16a34a}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--panel:#171e25;--fg:#e8edf2;--mut:#9aa8b6;--line:#2a343e;--acc:#2dd4bf;--acc2:#f59e0b;--chip:#202a33;--ads:#60a5fa;--org:#4ade80}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 main{max-width:1180px;margin:0 auto;padding:28px 20px 56px}
@@ -183,6 +183,7 @@ function hstack(el,rows){
   el.textContent='';
   const w=Math.max(300,el.clientWidth||600),rh=28,h=rows.length*rh+4;
   const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.setAttribute('role','img');
+  const cs=getComputedStyle(document.documentElement),CA=cs.getPropertyValue('--ads').trim()||'#2563eb',CO=cs.getPropertyValue('--org').trim()||'#16a34a';
   const parts=r=>{const a=Math.min(r.view_ads,r.view_total);return [a,Math.max(0,r.view_total-a)]};
   svg.setAttribute('aria-label',rows.map(r=>{const [a,o]=parts(r);return `${r.channel}: tổng ${nf.format(r.view_total)}, ad ${nf.format(a)}, organic ${nf.format(o)}`}).join('; '));
   const tip=document.createElement('div');tip.className='tip';el.append(svg,tip);
@@ -197,8 +198,8 @@ function hstack(el,rows){
     const g=mk('g',{transform:`translate(0,${i*rh+2})`});
     const t=mk('text',{x:ml-8,y:rh/2+4,'text-anchor':'end'});t.textContent=r.channel;
     const wa=bw*a/mx,wo=bw*o/mx;
-    const ba=mk('rect',{class:'s-ads',x:ml,y:4,width:Math.max(a?1:0,wa),height:rh-10,rx:2});
-    const bo=mk('rect',{class:'s-org',x:ml+wa,y:4,width:Math.max(o?1:0,wo),height:rh-10,rx:2});
+    const ba=mk('rect',{class:'s-ads',fill:CA,style:'fill:'+CA,x:ml,y:4,width:Math.max(a?1:0,wa),height:rh-10});
+    const bo=mk('rect',{class:'s-org',fill:CO,style:'fill:'+CO,x:ml+wa,y:4,width:Math.max(o?1:0,wo),height:rh-10});
     const v=mk('text',{x:ml+wa+wo+6,y:rh/2+4});v.textContent=lab(r);
     g.append(t,ba,bo,v);
     g.addEventListener('pointermove',e=>{const bb=el.getBoundingClientRect();tip.style.display='block';tip.textContent=`${r.channel}: ${nf.format(r.view_total)} view · ad ${nf.format(a)} · organic ${nf.format(o)} · ${r.videos} video`;tip.style.left=Math.min(e.clientX-bb.left+10,bb.width-320)+'px';tip.style.top=(e.clientY-bb.top+12)+'px';});
