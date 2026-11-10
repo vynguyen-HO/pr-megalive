@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Video 12 kênh – Megalive 11.11</title>
 <style>
-:root{--bg:#f6f7f9;--panel:#fff;--fg:#17212b;--mut:#5d6b7a;--line:#dde2e8;--acc:#0f766e;--acc2:#b45309;--chip:#eef2f6}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--panel:#171e25;--fg:#e8edf2;--mut:#9aa8b6;--line:#2a343e;--acc:#2dd4bf;--acc2:#f59e0b;--chip:#202a33}}
+:root{--bg:#f6f7f9;--panel:#fff;--fg:#17212b;--mut:#5d6b7a;--line:#dde2e8;--acc:#0f766e;--acc2:#b45309;--chip:#eef2f6;--ads:#0f766e;--org:#86cfc6}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--panel:#171e25;--fg:#e8edf2;--mut:#9aa8b6;--line:#2a343e;--acc:#2dd4bf;--acc2:#f59e0b;--chip:#202a33;--ads:#2dd4bf;--org:#1d6b63}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 main{max-width:1180px;margin:0 auto;padding:28px 20px 56px}
@@ -26,6 +26,9 @@ h2{font-size:16px;font-weight:650;margin:34px 0 10px}
 .chart text{fill:var(--mut);font-size:12px}
 .chart rect.bar{fill:var(--acc)}
 .chart rect.bar2{fill:var(--acc2)}
+.chart rect.s-ads{fill:var(--ads)}.chart rect.s-org{fill:var(--org)}
+.card.wide{grid-column:1/-1}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mut);margin:0 0 8px}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.18);padding:6px 9px;border-radius:6px;font-size:12px;white-space:nowrap;display:none;z-index:3}
 .bar-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
 select{font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px}
@@ -58,8 +61,7 @@ summary{cursor:pointer;color:var(--fg)}
 
 <h2>Theo kênh</h2>
 <div class="charts">
-<div class="card"><div class="note" style="margin:0 0 8px">View total</div><div class="chart" id="c0"></div></div>
-<div class="card"><div class="note" style="margin:0 0 8px">View by ad</div><div class="chart" id="c1"></div></div>
+<div class="card wide"><div class="note" style="margin:0 0 6px">View total theo kênh = view từ ad + view organic ước tính</div><div class="legend"><span><i style="background:var(--ads)"></i>View Ads</span><span><i style="background:var(--org)"></i>View organic</span></div><div class="chart" id="c0"></div></div>
 <div class="card"><div class="note" style="margin:0 0 8px">CPM (chi phí / 1.000 impression ad)</div><div class="chart" id="c2"></div></div>
 <div class="card"><div class="note" style="margin:0 0 8px">ER = (like + cmt + share) / view total</div><div class="chart" id="c3"></div></div>
 </div>
@@ -164,7 +166,7 @@ function hbar(el,rows,key,fmt,cls){
   let lw=0,vw=0;const probe=mk('text',{});svg.append(probe);
   rows.forEach(r=>{probe.textContent=r.channel;lw=Math.max(lw,probe.getComputedTextLength());probe.textContent=fmt(r[key]);vw=Math.max(vw,probe.getComputedTextLength());});
   probe.remove();
-  const ml=Math.min(lw+12,w*.48),mr=vw+12,bw=Math.max(20,w-ml-mr),mx=Math.max(...rows.map(r=>r[key]),1);
+  const ml=Math.min(lw+12,w*.48),mr=vw+12,bw=Math.max(20,w-ml-mr),mx=Math.max(...rows.map(r=>r[key]))||1;
   rows.forEach((r,i)=>{
     const g=mk('g',{transform:`translate(0,${i*rh+2})`});
     const t=mk('text',{x:ml-8,y:rh/2+4,'text-anchor':'end'});t.textContent=r.channel;
@@ -177,11 +179,37 @@ function hbar(el,rows,key,fmt,cls){
     svg.append(g);
   });
 }
+function hstack(el,rows){
+  el.textContent='';
+  const w=Math.max(300,el.clientWidth||600),rh=28,h=rows.length*rh+4;
+  const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.setAttribute('role','img');
+  const parts=r=>{const a=Math.min(r.view_ads,r.view_total);return [a,Math.max(0,r.view_total-a)]};
+  svg.setAttribute('aria-label',rows.map(r=>{const [a,o]=parts(r);return `${r.channel}: tổng ${nf.format(r.view_total)}, ad ${nf.format(a)}, organic ${nf.format(o)}`}).join('; '));
+  const tip=document.createElement('div');tip.className='tip';el.append(svg,tip);
+  const mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  const lab=r=>{const [a]=parts(r);return nf.format(r.view_total)+(r.view_total?` · ${pf1(1-a/r.view_total)} organic`:'')};
+  let lw=0,vw=0;const probe=mk('text',{});svg.append(probe);
+  rows.forEach(r=>{probe.textContent=r.channel;lw=Math.max(lw,probe.getComputedTextLength());probe.textContent=lab(r);vw=Math.max(vw,probe.getComputedTextLength());});
+  probe.remove();
+  const ml=Math.min(lw+12,w*.4),bw=Math.max(20,w-ml-vw-14),mx=Math.max(...rows.map(r=>r.view_total),1);
+  rows.forEach((r,i)=>{
+    const [a,o]=parts(r);
+    const g=mk('g',{transform:`translate(0,${i*rh+2})`});
+    const t=mk('text',{x:ml-8,y:rh/2+4,'text-anchor':'end'});t.textContent=r.channel;
+    const wa=bw*a/mx,wo=bw*o/mx;
+    const ba=mk('rect',{class:'s-ads',x:ml,y:4,width:Math.max(a?1:0,wa),height:rh-10,rx:2});
+    const bo=mk('rect',{class:'s-org',x:ml+wa,y:4,width:Math.max(o?1:0,wo),height:rh-10,rx:2});
+    const v=mk('text',{x:ml+wa+wo+6,y:rh/2+4});v.textContent=lab(r);
+    g.append(t,ba,bo,v);
+    g.addEventListener('pointermove',e=>{const bb=el.getBoundingClientRect();tip.style.display='block';tip.textContent=`${r.channel}: ${nf.format(r.view_total)} view · ad ${nf.format(a)} · organic ${nf.format(o)} · ${r.videos} video`;tip.style.left=Math.min(e.clientX-bb.left+10,bb.width-320)+'px';tip.style.top=(e.clientY-bb.top+12)+'px';});
+    g.addEventListener('pointerleave',()=>{tip.style.display='none'});
+    svg.append(g);
+  });
+}
 function drawCharts(){
   if(!CH.length)return;
   const by=k=>[...CH].sort((a,b)=>b[k]-a[k]);
-  hbar(document.getElementById('c0'),by('view_total'),'view_total',x=>nf.format(x),'bar');
-  hbar(document.getElementById('c1'),by('view_ads'),'view_ads',x=>nf.format(x),'bar');
+  hstack(document.getElementById('c0'),by('view_total'));
   hbar(document.getElementById('c2'),by('cpm').filter(r=>r.impressions>0),'cpm',vnd,'bar2');
   hbar(document.getElementById('c3'),by('er'),'er',pf2,'bar2');
 }
