@@ -215,6 +215,7 @@ function drawCharts(){
   hbar(document.getElementById('c3'),by('er'),'er',pf2,'bar2');
 }
 let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(drawCharts,120)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',drawCharts);
 
 const COLS=[['channel','Kênh','t'],['caption','Caption','t'],['url','Video',null],['view_total','View total','n'],['view_ads','View Ads','n'],['cpm','CPM','vnd'],['view6s','View ≥6s','n'],['like_t','Like','n'],['er','ER','n'],['posted','Đăng','t'],['ad_status','Ad','t'],['org_views','Organic ước tính','n'],['impressions','Impr ad','n'],['spend','Chi phí ad','vnd'],['cmt_t','Cmt','n'],['share_t','Share','n'],['follows','Follow','n'],['visits','Vào profile','n']];
 let sk='view_total',sd=-1;
