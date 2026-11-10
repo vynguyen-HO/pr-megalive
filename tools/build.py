@@ -3,7 +3,7 @@
 Cách dùng: python3 tools/build.py <thư mục input>
 Thư mục input chứa 3 file (ngăn cách bằng TAB hoặc khoảng trắng):
   ads.tsv         ad_id  item_id          (mọi ad của 12 kênh, kể cả ad 0 impression)
-  metrics.tsv     ad_id  impressions plays view6s likes comments shares follows visits   (ad có impressions > 0)
+  metrics.tsv     ad_id  impressions plays view6s likes comments shares follows visits spend   (ad có impressions > 0; spend = chi phí, VND)
   new_videos.tsv  identity_id <TAB> item_id <TAB> duration <TAB> caption   (video chưa có trong data.json; có thể rỗng)
 Không đạt kiểm tra thì thoát mã 1 và KHÔNG ghi file.
 """
@@ -26,7 +26,8 @@ CH = {
  "75798885-07d2-5b9e-8420-0dbd4da857b3": ("pynchi", "pynpynemly"),
 }
 START = "2026-11-09"
-K = ["impressions", "plays", "view6s", "likes", "comments", "shares", "follows", "visits"]
+K = ["impressions", "plays", "view6s", "likes", "comments", "shares", "follows", "visits", "spend"]
+N = len(K)
 VN = dt.timezone(dt.timedelta(hours=7))
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / ".data-wt" / "data.json"
@@ -43,7 +44,7 @@ def rows(p):
 
 inp = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 ad2item = dict(l.split()[:2] for l in rows(inp / "ads.tsv"))
-metrics = {p[0]: [int(x) for x in p[1:9]] for p in (l.split() for l in rows(inp / "metrics.tsv"))}
+metrics = {p[0]: [round(float(x)) for x in p[1:1 + N]] + [0] * (N + 1 - len(p)) for p in (l.split() for l in rows(inp / "metrics.tsv"))}
 if not ad2item:
     die("ads.tsv rỗng")
 if set(metrics) - set(ad2item):
@@ -70,8 +71,8 @@ for l in rows(inp / "new_videos.tsv"):
 
 agg = {}
 for a, i in ad2item.items():
-    s = agg.setdefault(i, [0] * 8)
-    for n, x in enumerate(metrics.get(a, [0] * 8)):
+    s = agg.setdefault(i, [0] * N)
+    for n, x in enumerate(metrics.get(a, [0] * N)):
         s[n] += x
 
 unknown = sorted(set(agg) - set(vids))
@@ -81,7 +82,7 @@ if unknown:
 for iid, v in vids.items():
     s = agg.get(iid)
     v["ad_status"] = "Chưa có ad" if s is None else ("Đã chạy ad" if s[0] > 0 else "Chưa delivery")
-    for k, n in zip(K, range(8)):
+    for k, n in zip(K, range(N)):
         v[k] = None if s is None else s[n]
 
 out = sorted(vids.values(), key=lambda v: v["posted"], reverse=True)

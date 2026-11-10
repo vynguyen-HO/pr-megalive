@@ -14,7 +14,7 @@ h1{font-size:26px;font-weight:650;margin:0 0 6px;letter-spacing:-.01em}
 h2{font-size:16px;font-weight:650;margin:34px 0 10px}
 .lead{font-size:15px;margin:0 0 4px}
 .note{color:var(--mut);font-size:12.5px;margin:4px 0 0}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:18px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px;margin-top:18px}
 .tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
 .tile span{display:block;color:var(--mut);font-size:12.5px}
 .tile b{display:block;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
@@ -51,16 +51,17 @@ summary{cursor:pointer;color:var(--fg)}
 <h1>Video 12 kênh – Megalive 11.11</h1>
 <p class="lead" id="lead">Đang tải số liệu…</p>
 <p class="note" id="upd"></p>
-<p class="note">View công khai = số view hiện trên TikTok (gồm cả view từ ad). Organic ước tính = view công khai − lượt play từ ad. Các cột ad (Impr, View ≥6s, Like, Cmt, Share, Follow, Vào profile) chỉ tính phần do Spark ads tạo ra từ 09/11; video chưa có ad hoặc ad chưa delivery tính 0 impression.</p>
+<p class="note">View total = view hiện trên TikTok (gồm cả view từ ad). View Ads, CPM, View ≥6s chỉ tính phần do Spark ads tạo ra từ 09/11. Like và ER theo số công khai trên TikTok.</p>
 
 <div id="err" role="alert"></div>
 <div class="tiles" id="tiles"></div>
 
 <h2>Theo kênh</h2>
 <div class="charts">
-<div class="card"><div class="note" style="margin:0 0 8px">View organic ước tính</div><div class="chart" id="c0"></div></div>
-<div class="card"><div class="note" style="margin:0 0 8px">Impression ad</div><div class="chart" id="c1"></div></div>
-<div class="card"><div class="note" style="margin:0 0 8px">Tỷ lệ view ≥6s trên impression (kênh ít impression thì dao động mạnh)</div><div class="chart" id="c2"></div></div>
+<div class="card"><div class="note" style="margin:0 0 8px">View total</div><div class="chart" id="c0"></div></div>
+<div class="card"><div class="note" style="margin:0 0 8px">View by ad</div><div class="chart" id="c1"></div></div>
+<div class="card"><div class="note" style="margin:0 0 8px">CPM (chi phí / 1.000 impression ad)</div><div class="chart" id="c2"></div></div>
+<div class="card"><div class="note" style="margin:0 0 8px">ER = (like + cmt + share) / view total</div><div class="chart" id="c3"></div></div>
 </div>
 
 <h2>Chi tiết từng video</h2>
@@ -74,7 +75,7 @@ summary{cursor:pointer;color:var(--fg)}
 <p class="note">Bấm tiêu đề cột để sắp xếp. Ngày đăng theo giờ Việt Nam, suy từ ID video. Ô trống = chưa có ad dùng video này nên không có số liệu. Tag = caption có #megalive hoặc #megalive1111.</p>
 
 <details><summary>Định nghĩa chỉ số</summary>
-<p><b>View công khai</b>: lượt xem hiển thị trên trang TikTok của video, gồm cả lượt xem từ ad; lấy từ trang TikTok công khai mỗi 2 giờ. <b>Organic ước tính</b> = view công khai − lượt play từ ad (không âm); là số gần đúng vì hai nguồn cập nhật lệch giờ. <b>Impression</b>: số lần ad hiển thị. <b>View ≥6s</b>: lượt xem từ 6 giây trở lên (engaged view). <b>ER</b> = (like + comment + share) / impression. <b>Vào profile</b>: lượt vào trang kênh từ ad.</p>
+<p><b>View công khai</b>: lượt xem hiển thị trên trang TikTok của video, gồm cả lượt xem từ ad; lấy từ trang TikTok công khai mỗi 2 giờ. <b>Organic ước tính</b> = view công khai − lượt play từ ad (không âm); là số gần đúng vì hai nguồn cập nhật lệch giờ. <b>View total</b>: view công khai trên TikTok (nếu chưa lấy được thì dùng View Ads). <b>View Ads</b>: lượt play video từ ad. <b>CPM</b> = chi phí ad / impression × 1.000 (VND). <b>Impression</b>: số lần ad hiển thị. <b>View ≥6s</b>: lượt xem từ 6 giây trở lên (engaged view). <b>Like, Cmt, Share, ER</b>: số công khai trên TikTok; ER = (like + comment + share) / view total. <b>Vào profile</b>: lượt vào trang kênh từ ad.</p>
 <p>Nguồn: TikTok for Business, tài khoản HannahOlala - Affiliate (report ad level, campaign PR 11.11). Danh sách video lấy từ identity của 12 kênh.</p>
 </details>
 </main>
@@ -108,29 +109,37 @@ async function loadOrg(){
   try{const r=await fetch(ORG_URL+'?t='+Date.now(),{cache:'no-store'});return r.ok?await r.json():null}catch(e){return null}
 }
 
+const vnd=x=>nf.format(Math.round(x))+'đ';
 function setData(payload,org){
   DATA=payload.videos;
   const OI=(org&&org.items)||{};
-  DATA.forEach(r=>{r.er = r.impressions>0 ? ((r.likes||0)+(r.comments||0)+(r.shares||0))/r.impressions : null;
+  DATA.forEach(r=>{
     const o=OI[r.item_id];
-    r.pub_views=o?o[0]:null; r.pub_likes=o?o[1]:null;
-    r.org_views=o?Math.max(0,o[0]-(r.plays||0)):null;});
+    r.pub_views=o?o[0]:null;
+    r.view_ads=r.plays;
+    r.view_total=o?Math.max(o[0],r.plays||0):r.plays;
+    r.org_views=o?Math.max(0,o[0]-(r.plays||0)):null;
+    r.like_t=o?o[1]:r.likes; r.cmt_t=o?o[2]:r.comments; r.share_t=o?o[3]:r.shares;
+    r.cpm=r.impressions>0&&r.spend!=null?r.spend/r.impressions*1000:null;
+    r.er=r.view_total>0?((r.like_t||0)+(r.cmt_t||0)+(r.share_t||0))/r.view_total:null;
+  });
+  const KS=['view_total','view_ads','org_views','impressions','spend','view6s','like_t','cmt_t','share_t','visits'];
   const m=new Map();
-  DATA.forEach(v=>{if(!m.has(v.channel))m.set(v.channel,{channel:v.channel,videos:0,impressions:0,view6s:0,likes:0,comments:0,shares:0,visits:0,pub_views:0,org_views:0});
-    const r=m.get(v.channel);r.videos++;['impressions','view6s','likes','comments','shares','visits','pub_views','org_views'].forEach(k=>r[k]+=+v[k]||0);});
-  CH=[...m.values()].map(r=>({...r,pct6:r.impressions?r.view6s/r.impressions:0})).sort((a,b)=>b.impressions-a.impressions);
-  const T={videos:DATA.length,impressions:sum(DATA,'impressions'),view6s:sum(DATA,'view6s'),likes:sum(DATA,'likes'),comments:sum(DATA,'comments'),shares:sum(DATA,'shares'),visits:sum(DATA,'visits'),pub_views:sum(DATA,'pub_views'),org_views:sum(DATA,'org_views')};
+  DATA.forEach(v=>{if(!m.has(v.channel)){const z={channel:v.channel,videos:0};KS.forEach(k=>z[k]=0);m.set(v.channel,z);}
+    const r=m.get(v.channel);r.videos++;KS.forEach(k=>r[k]+=+v[k]||0);});
+  const fin=r=>({...r,cpm:r.impressions?r.spend/r.impressions*1000:0,er:r.view_total?(r.like_t+r.cmt_t+r.share_t)/r.view_total:0});
+  CH=[...m.values()].map(fin).sort((a,b)=>b.view_total-a.view_total);
+  const T={videos:DATA.length};KS.forEach(k=>T[k]=sum(DATA,k));Object.assign(T,fin(T));
   const nOrg=DATA.filter(r=>r.pub_views!=null).length;
-  T.er=T.impressions?(T.likes+T.comments+T.shares)/T.impressions:0;
   const days=[...new Set(DATA.map(r=>r.posted.slice(8,10)+'/'+r.posted.slice(5,7)))].sort().join(', ');
   document.getElementById('lead').textContent = T.videos
-    ? `12 kênh đăng ${T.videos} video (${days}), tạo ${nf.format(T.impressions)} impression; ${CH[0].channel} dẫn đầu với ${T.impressions?pf1(CH[0].impressions/T.impressions):'0%'} tổng impression.`
+    ? `12 kênh đăng ${T.videos} video (${days}), tổng ${nf.format(T.view_total)} view, trong đó ${nf.format(T.view_ads)} view từ ad; ${CH[0].channel} dẫn đầu với ${T.view_total?pf1(CH[0].view_total/T.view_total):'0%'} tổng view.`
     : 'Chưa có video nào trong khoảng thời gian này.';
   const u=new Date(payload.updated_at);
-  document.getElementById('upd').textContent='Cập nhật lúc '+u.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'})+' (tự làm mới mỗi 30 phút).'
-    +(org&&org.updated_at?' Số view công khai lấy lúc '+new Date(org.updated_at).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'})+` (${nOrg}/${T.videos} video, làm mới mỗi 2 giờ).`:' Chưa có số view công khai.');
+  document.getElementById('upd').textContent='Số ad cập nhật lúc '+u.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'})+' (mỗi 30 phút).'
+    +(org&&org.updated_at?' View công khai lấy lúc '+new Date(org.updated_at).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'})+` (${nOrg}/${T.videos} video, mỗi 2 giờ).`:' Chưa có view công khai.');
   const tl=document.getElementById('tiles');tl.textContent='';
-  [['Video',nf.format(T.videos)],['View công khai (tổng)',nf.format(T.pub_views)],['View organic ước tính',nf.format(T.org_views)],['Impression ad',nf.format(T.impressions)],['View ≥6s',nf.format(T.view6s)],['Like',nf.format(T.likes)],['Vào profile',nf.format(T.visits)],['ER (like + cmt + share) / impr',pf2(T.er)]].forEach(([l,v])=>{
+  [['Video',nf.format(T.videos)],['View total',nf.format(T.view_total)],['View Ads',nf.format(T.view_ads)],['CPM',vnd(T.cpm)],['View ≥6s',nf.format(T.view6s)],['Like',nf.format(T.like_t)],['ER',pf2(T.er)]].forEach(([l,v])=>{
     const d=document.createElement('div');d.className='tile';const s=document.createElement('span');s.textContent=l;const b=document.createElement('b');b.textContent=v;d.append(s,b);tl.append(d);});
   const keep=fc.value;fc.textContent='';fc.append(new Option('Tất cả kênh',''));CH.forEach(r=>fc.append(new Option(r.channel,r.channel)));
   if([...fc.options].some(o=>o.value===keep))fc.value=keep;
@@ -164,14 +173,16 @@ function hbar(el,rows,key,fmt,cls){
 }
 function drawCharts(){
   if(!CH.length)return;
-  hbar(document.getElementById('c0'),[...CH].sort((a,b)=>b.org_views-a.org_views),'org_views',x=>nf.format(x),'bar');
-  hbar(document.getElementById('c1'),CH,'impressions',x=>nf.format(x),'bar');
-  hbar(document.getElementById('c2'),[...CH].sort((a,b)=>b.pct6-a.pct6),'pct6',pf1,'bar2');
+  const by=k=>[...CH].sort((a,b)=>b[k]-a[k]);
+  hbar(document.getElementById('c0'),by('view_total'),'view_total',x=>nf.format(x),'bar');
+  hbar(document.getElementById('c1'),by('view_ads'),'view_ads',x=>nf.format(x),'bar');
+  hbar(document.getElementById('c2'),by('cpm').filter(r=>r.impressions>0),'cpm',vnd,'bar2');
+  hbar(document.getElementById('c3'),by('er'),'er',pf2,'bar2');
 }
 let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(drawCharts,120)});
 
-const COLS=[['channel','Kênh','t'],['url','Video',null],['posted','Đăng','t'],['caption','Caption','t'],['ad_status','Ad','t'],['pub_views','View công khai','n'],['org_views','Organic ước tính','n'],['pub_likes','Like công khai','n'],['impressions','Impr ad','n'],['view6s','View ≥6s','n'],['likes','Like','n'],['comments','Cmt','n'],['shares','Share','n'],['follows','Follow','n'],['visits','Vào profile','n'],['er','ER','n']];
-let sk='posted',sd=-1;
+const COLS=[['channel','Kênh','t'],['url','Video',null],['view_total','View total','n'],['view_ads','View Ads','n'],['cpm','CPM','vnd'],['view6s','View ≥6s','n'],['like_t','Like','n'],['er','ER','n'],['posted','Đăng','t'],['caption','Caption','t'],['ad_status','Ad','t'],['org_views','Organic ước tính','n'],['impressions','Impr ad','n'],['spend','Chi phí ad','vnd'],['cmt_t','Cmt','n'],['share_t','Share','n'],['follows','Follow','n'],['visits','Vào profile','n']];
+let sk='view_total',sd=-1;
 const thead=document.querySelector('#tb thead'),tbody=document.querySelector('#tb tbody');
 const htr=document.createElement('tr');
 COLS.forEach(([k,l])=>{const th=document.createElement('th');th.textContent=l;if(k!=='url'){th.dataset.k=k;th.addEventListener('click',()=>{if(sk===k)sd=-sd;else{sk=k;sd=['channel','caption','ad_status'].includes(k)?1:-1}render()})}htr.append(th)});
@@ -193,6 +204,7 @@ function render(){
       else if(k==='posted'){td.textContent=r.posted.slice(8,10)+'/'+r.posted.slice(5,7)+' '+r.posted.slice(11,16);}
       else if(k==='ad_status'){const s=document.createElement('span');s.className='pill'+(r.ad_status==='Đã chạy ad'?' run':'');s.textContent=r.ad_status;td.append(s);}
       else if(k==='er'){td.className='n';td.textContent=r.er==null?'':pf2(r.er);}
+      else if(ty==='vnd'){td.className='n';td.textContent=r[k]==null?'':vnd(r[k]);}
       else if(ty==='n'){td.className='n';td.textContent=r[k]==null?'':nf.format(r[k]);}
       else{td.textContent=r[k];if(k==='caption')td.className='cap';}
       tr.append(td);
